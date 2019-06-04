@@ -11,6 +11,16 @@ import (
 // TODO:
 // Отрисовка таблицы процессов
 
+// UIStateEnum перечисляет все состояния графического интерфейса
+type UIStateEnum int
+
+const (
+	// ProcessMonitor указывает, что отображается диспетчер задач
+	ProcessMonitor UIStateEnum = iota
+	// MemoryDispatchMonitor указывает, что отображается менеджер памяти
+	MemoryDispatchMonitor
+)
+
 func main() {
 	// ==== Инициализация ресурсов библиотеки псевдографики ==== //
 	if err := initTermbox(); err != nil {
@@ -21,6 +31,8 @@ func main() {
 	// =============== Рабочие переменные ============== //
 	// Флаг завершения работы - нужен для завершения программного цикла
 	isQuitEvent := false
+	// Текущий экран графического интерфейса
+	uiState := ProcessMonitor
 
 	// ========== Инициализация элементов управления =========== //
 	createProcessButton := uitools.NewButton(1, 1, "Создать процесс", termbox.ColorWhite, termbox.ColorBlue,
@@ -37,6 +49,14 @@ func main() {
 			},
 			func(ev *termbox.Event) {
 				isQuitEvent = true
+			},
+			func(ev *termbox.Event) {
+				switch ev.Key {
+				case termbox.KeyF1:
+					uiState = ProcessMonitor
+				case termbox.KeyF2:
+					uiState = MemoryDispatchMonitor
+				}
 			})
 		if isQuitEvent {
 			break
@@ -46,7 +66,15 @@ func main() {
 
 		// ================= Отрисовка псевдографики ================= //
 		drawGUI(func() {
-			createProcessButton.Draw()
+			switch uiState {
+			case ProcessMonitor:
+				createProcessButton.Draw()
+
+				drawStatusBar()
+
+			case MemoryDispatchMonitor:
+
+			}
 		},
 			termbox.ColorBlue,
 			termbox.ColorBlue)
