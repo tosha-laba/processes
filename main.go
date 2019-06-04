@@ -48,6 +48,9 @@ func main() {
 				createProcessButton.CheckClick(ev.MouseX, ev.MouseY)
 			},
 			func(ev *termbox.Event) {
+
+			},
+			func(ev *termbox.Event) {
 				isQuitEvent = true
 			},
 			func(ev *termbox.Event) {
