@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"operating-systems/termbox_tuts/uitools"
+	"operating-systems/processes/uitools"
 
 	"github.com/nsf/termbox-go"
 )
