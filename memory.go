@@ -157,6 +157,7 @@ func (mmu *MemoryManagementUnit) Free(block *MemoryBlockNode, isSwap bool) bool 
 var memOnce sync.Once
 var mmuInstance *MemoryManagementUnit
 
+// GetMMU дает доступ к единственному экземпляру менеджера памяти
 func GetMMU() *MemoryManagementUnit {
 	memOnce.Do(func() {
 		mmuInstance = &MemoryManagementUnit{blockList: list.New()}
