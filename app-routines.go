@@ -14,14 +14,14 @@ func initTermbox() error {
 }
 
 // Опрашивает события библиотеки псевдографики и выполняет переданные замыкания
-func pollEvents(mouseLeftAction func(*termbox.Event), mouseUpAction func(*termbox.Event),
+func pollEvents(mouseLeftAction func(*termbox.Event), mouseAction func(*termbox.Event),
 	KeyEscAction func(*termbox.Event), keyboardAction func(*termbox.Event)) {
 	switch ev := termbox.PollEvent(); ev.Type {
 	case termbox.EventMouse:
 		if ev.Key == termbox.MouseLeft {
 			mouseLeftAction(&ev)
-		} else if ev.Key == termbox.MouseRelease {
-			mouseUpAction(&ev)
+		} else {
+			mouseAction(&ev)
 		}
 	case termbox.EventKey:
 		if ev.Key == termbox.KeyEsc {
